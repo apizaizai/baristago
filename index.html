@@ -74,17 +74,16 @@
 
   <script>
     function sendCommand(pin) {
-      const urlOn = `http://175.143.107.37:80/EN/httpapi.json?CMD=UART_WRITE&UWHEXVAL=${pin}`;
-      const urlOff = `http://175.143.107.37:80/EN/httpapi.json?CMD=UART_WRITE&UWHEXVAL=0`; // Assuming "0" is the off command
+      const url = `http://175.143.107.37:80/EN/httpapi.json?CMD=UART_WRITE&UWHEXVAL=${pin}`;
       
       // Trigger the "on" command
       const imgOn = new Image();
-      imgOn.src = urlOn; // This triggers the "on" request immediately
+      imgOn.src = url; // This triggers the "on" request immediately
 
-      // After 3 seconds, trigger the "off" command
+      // After 3 seconds, send the same command again to turn it "off"
       setTimeout(function() {
         const imgOff = new Image();
-        imgOff.src = urlOff; // This triggers the "off" request
+        imgOff.src = url; // Send the same signal again to turn it "off"
       }, 3000); // Wait for 3 seconds before sending the "off" command
     }
   </script>
