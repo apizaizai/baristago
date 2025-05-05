@@ -1,35 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Order</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Robot Barista</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fffbe9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #4b3f2f;
+      margin-bottom: 30px;
+    }
+
+    .drink {
+      margin: 20px;
+      text-align: center;
+    }
+
+    .drink img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btn {
+      background-color: #6b4f3b;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      margin-top: 15px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #5a3e2c;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
-    <h1>Choose Your Coffee</h1>
-    <button onclick="makeCoffee(1)">Americano</button>
-    <button onclick="makeCoffee(2)">Latte</button>
+  <h2>☕ Robot Barista Menu ☕</h2>
 
-    <script>
-        function makeCoffee(val) {
-            // Construct the URL based on the relay ID (1 for Americano, 2 for Latte, etc.)
-            const url = `http://192.168.0.88/EN/httpapi.json?CMD=UART_WRITE&UWHEXVAL=${val}`;
-            console.log('Sending request to:', url);
+  <div class="drink">
+    <img src="americano.jpeg" alt="Americano" />
+    <br />
+    <button class="btn" onclick="sendCommand(1)">Americano</button>
+  </div>
 
-            // Send the request to the WiFi module
-            fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        alert('Coffee order sent!');
-                    } else {
-                        alert('Failed to send order.');
-                    }
-                })
-                .catch(error => {
-                    console.log('Error:', error);
-                    alert('Error occurred while sending order.');
-                });
-        }
-    </script>
+  <div class="drink">
+    <img src="latte.jpeg" alt="Latte" />
+    <br />
+    <button class="btn" onclick="sendCommand(2)">Latte</button>
+  </div>
+
+  <footer>Made with ❤️ by your Robot Barista</footer>
+
+  <script>
+    function sendCommand(pin) {
+      const url = `http://192.168.0.88/EN/httpapi.json?CMD=UART_WRITE&UWHEXVAL=${pin}`;
+      const img = new Image();
+      img.src = url; // this silently triggers the request
+      alert("Coffee order sent!");
+    }
+  </script>
 </body>
 </html>
